@@ -15,9 +15,7 @@ RCT_EXPORT_VIEW_PROPERTY(square, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(showBorder, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(showNativeButtons, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(showTitleLabel, BOOL)
-RCT_EXPORT_VIEW_PROPERTY(backgroundColor, UIColor)
-RCT_EXPORT_VIEW_PROPERTY(strokeColor, UIColor)
-
+RCT_EXPORT_VIEW_PROPERTY(keyValue, NSString)
 
 -(dispatch_queue_t) methodQueue
 {
@@ -45,12 +43,13 @@ RCT_EXPORT_METHOD(resetImage:(nonnull NSNumber *)reactTag) {
 	});
 }
 
--(void) publishSaveImageEvent:(NSString *) aTempPath withEncoded: (NSString *) aEncoded {
+-(void) publishSaveImageEvent:(NSString *) aTempPath withEncoded: (NSString *) aEncoded keyValue: (NSString *) keyValue {
 	[self.bridge.eventDispatcher
 	 sendDeviceEventWithName:@"onSaveEvent"
 	 body:@{
 					@"pathName": aTempPath,
-					@"encoded": aEncoded
+					@"encoded": aEncoded,
+                    @"keyValue": keyValue
 					}];
 }
 

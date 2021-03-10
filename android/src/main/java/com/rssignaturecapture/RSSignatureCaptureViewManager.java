@@ -26,6 +26,7 @@ public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureC
 	public static final String PROPS_MAX_STROKE_WIDTH="maxStrokeWidth";
 	public static final String PROPS_STROKE_COLOR="strokeColor";
 	public static final String PROPS_BACKGROUND_COLOR="backgroundColor";
+	public static final String PROPS_KEY_VALUE = "keyValue";
 
 	public static final int COMMAND_SAVE_IMAGE = 1;
 	public static final int COMMAND_RESET_IMAGE = 2;
@@ -101,16 +102,9 @@ public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureC
 
 	@ReactProp(name = PROPS_BACKGROUND_COLOR)
 	public void setPropsBackgroundColor(RSSignatureCaptureMainView view, @Nullable String color) {
-		int parsed;
-		if (color.equalsIgnoreCase("transparent")) {
-			parsed = Color.TRANSPARENT;
-		} else {
-			parsed = Color.parseColor(color);
-		}
-
 		Log.d("backgroundColor:",  ""+color);
 		if(view!=null){
-			view.getSignatureView().setBackgroundColor(parsed);
+			view.getSignatureView().setBackgroundColor(Color.parseColor(color));
 		}
 	}
 
@@ -128,6 +122,13 @@ public class RSSignatureCaptureViewManager extends ViewGroupManager<RSSignatureC
 				COMMAND_SAVE_IMAGE,
 				"resetImage",
 				COMMAND_RESET_IMAGE);
+	}
+
+    @ReactProp(name = PROPS_KEY_VALUE)
+	public void setKeyValue(RSSignatureCaptureMainView view, @Nullable String keyValue){
+		if(view!=null){
+			view.setKeyValue(keyValue);
+		}
 	}
 
 	@Override

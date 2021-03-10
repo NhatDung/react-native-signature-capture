@@ -19,8 +19,7 @@
 	BOOL _showBorder;
 	BOOL _showNativeButtons;
 	BOOL _showTitleLabel;
-	UIColor *_backgroundColor;
-	UIColor *_strokeColor;
+	NSString *_keyValue;
 }
 
 @synthesize sign;
@@ -28,11 +27,9 @@
 
 - (instancetype)init
 {
-	_showBorder = YES;
+  _showBorder = YES;
 	_showNativeButtons = YES;
 	_showTitleLabel = YES;
-	_backgroundColor = UIColor.whiteColor;
-	_strokeColor = UIColor.blackColor;
 	if ((self = [super init])) {
 		_border = [CAShapeLayer layer];
 		_border.strokeColor = [UIColor blackColor].CGColor;
@@ -69,8 +66,6 @@
 						initWithFrame: CGRectMake(0, 0, screen.width, screen.height)
 						context: _context];
 		sign.manager = manager;
-		sign.backgroundColor = _backgroundColor;
-		sign.strokeColor = _strokeColor;
 
 		[self addSubview:sign];
 
@@ -185,12 +180,8 @@
 	_showTitleLabel = showTitleLabel;
 }
 
-- (void)setBackgroundColor:(UIColor*)backgroundColor {
-	_backgroundColor = backgroundColor;
-}
-
-- (void)setStrokeColor:(UIColor*)strokeColor {
-	_strokeColor = strokeColor;
+- (void)setKeyValue:(NSString *)keyValue {
+	_keyValue = keyValue;
 }
 
 -(void) onSaveButtonPressed {
@@ -228,7 +219,7 @@
 		//UInt32 result = [attrs fileSize];
 
 		NSString *base64Encoded = [imageData base64EncodedStringWithOptions:0];
-		[self.manager publishSaveImageEvent: tempPath withEncoded:base64Encoded];
+        [self.manager publishSaveImageEvent: tempPath withEncoded:base64Encoded keyValue:_keyValue];
 	}
 }
 

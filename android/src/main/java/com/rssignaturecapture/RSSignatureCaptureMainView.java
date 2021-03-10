@@ -41,6 +41,7 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
   Boolean showNativeButtons = true;
   Boolean showTitleLabel = true;
   int maxSize = 500;
+  String keyValue = "";
 
   public RSSignatureCaptureMainView(Context context, Activity activity) {
     super(context);
@@ -176,9 +177,10 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
 
 
       byte[] byteArray = byteArrayOutputStream.toByteArray();
-      String encoded = Base64.encodeToString(byteArray, Base64.NO_WRAP);
+      String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
       WritableMap event = Arguments.createMap();
+      event.putString("keyValue", this.keyValue);
       event.putString("pathName", file.getAbsolutePath());
       event.putString("encoded", encoded);
       ReactContext reactContext = (ReactContext) getContext();
@@ -218,5 +220,9 @@ public class RSSignatureCaptureMainView extends LinearLayout implements OnClickL
     ReactContext reactContext = (ReactContext) getContext();
     reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "topChange", event);
 
+  }
+
+  public void setKeyValue(String keyValue) {
+    this.keyValue = keyValue;
   }
 }
